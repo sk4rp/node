@@ -1,30 +1,26 @@
-const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+const jwt = require('jsonwebtoken');
+const typeDefs = require("./schema");
+const resolvers = require("./resolvers");
+const {ApolloServer} = require("apollo-server");
+const SECRET_KEY = 'testing123123';
 
-const app = express();
-const port = process.env.PORT || 4000;
-
-const typeDefs = gql`
-    type Query {
-        hello: String
+const getUserFromToken = (token) => {
+    if (token) {
+        try {
+            return jwt.verify(token, SECRET_KEY);
+        } catch (err) {
+            throw new Error('Неверный токен');
+        }
     }
-`;
-
-const resolvers = {
-    Query: {
-        hello: () => 'Hello, GraphQL!',
-    },
+    return null;
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
-
-async function startServer() {
-    await server.start();
-    server.applyMiddleware({ app });
-
-    app.listen(port, () => {
-        console.log(`Сервер запущен по данному URL: http://localhost:${port}/graphql`);
-    });
-}
-
-startServer();
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: ({req}) => {
+        const token = req.headers.authorization || '';
+        const user = getUserFromToken(token.replace('Bearer ', ''));
+        return {user};
+    },
+});
