@@ -21,7 +21,7 @@ services:
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://testDB:123456@database:5432/testDB
       HASURA_GRAPHQL_ENABLE_CONSOLE: 'true'
-      HASURA_GRAPHQL_ADMIN_SECRET: 1432243432423423432432432243243
+      HASURA_GRAPHQL_ADMIN_SECRET: 123456
 
   application:
     build:
