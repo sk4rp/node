@@ -1,12 +1,12 @@
 FROM node:latest
 
-WORKDIR /src
+WORKDIR /app-node
 
 COPY package*.json ./
 
 RUN npm install
 
-COPY src ./src
+COPY . .
 
 EXPOSE 4000
 
