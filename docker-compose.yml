@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: testDB
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: testDB
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  hasura:
+    image: hasura/graphql-engine:latest
+    ports:
+      - '8080:8080'
+    depends_on:
+      - database
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://testDB:123456@database:5432/testDB
+      HASURA_GRAPHQL_ENABLE_CONSOLE: 'true'
+      HASURA_GRAPHQL_ADMIN_SECRET: 1432243432423423432432432243243
+
+  application:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    ports:
+      - '4000:4000'
+    depends_on:
+      - database
