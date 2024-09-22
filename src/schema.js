@@ -13,6 +13,11 @@ const typeDefs = gql`
         createdAt: String!
     }
 
+    type AuthPayload {
+        token: String!
+        user: User!
+    }
+
     type Query {
         users: [User]
         messages: [Message]
@@ -21,6 +26,7 @@ const typeDefs = gql`
     type Mutation {
         createUser(username: String!): User
         createMessage(content: String!): Message
+        login(username: String!): AuthPayload
     }
 
     type Subscription {
