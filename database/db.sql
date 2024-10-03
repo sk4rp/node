@@ -13,7 +13,7 @@ CREATE TABLE messages
     created_at TIMESTAMP DEFAULT NOW()
 );
 
--- Triggers
+-- Trigger
 CREATE OR REPLACE FUNCTION notify_new_message() RETURNS trigger AS
 $$
 BEGIN

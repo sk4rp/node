@@ -7,7 +7,8 @@ const {makeExecutableSchema} = require('@graphql-tools/schema');
 const jwt = require('jsonwebtoken');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
-const SECRET_KEY = 'testing123123';
+
+const SECRET_KEY = 'testing123123'; // TODO: move to .env, bad practice
 
 const getUserFromToken = (token) => {
     if (token) {

@@ -1,7 +1,8 @@
 const {query} = require('./db');
 const {pubSub} = require('./subscriptions');
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'testing123123';
+
+const SECRET_KEY = 'testing123123'; // TODO: move to .env, bad practice
 
 const resolvers = {
     Query: {

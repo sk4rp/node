@@ -7,7 +7,7 @@ const pool = new Pool({
     database: 'testDB',
     password: '123456',
     port: 5432,
-});
+}); // TODO: move to env
 
 const query = (text, params) => pool.query(text, params);
 pool.connect((err, client, done) => {
